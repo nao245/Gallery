@@ -39,7 +39,7 @@ const Hero: React.FC<HeroProps> = ({ onScrollClick, backgroundImage }) => {
           className="text-md text-gray-300 mt-4 italic animate-fade-in-up"
           style={{ animationDelay: '1.2s' }}
         >
-          「レンズを通して世界を切り取る。」
+          「一瞬の物語を、」
         </p>
       </div>
 
