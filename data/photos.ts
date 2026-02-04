@@ -8,7 +8,6 @@ export const initialPhotos: Photo[] = [
   {
     id: '1',
     src: '/images/photo-01.jpg',
-    highResSrc: '/images/photo-01-high-res.jpg',
     alt: 'Midnight City',
     location: '東京, 日本',
     date: '2024/05/12',
@@ -59,36 +58,6 @@ export const initialPhotos: Photo[] = [
     camera: 'Sony A7S III',
     lens: '85mm f/1.4',
     settings: '1/4000s, f/1.4, ISO 100',
-    description: ''
-  },
-  {
-    id: '6',
-    src: '/images/photo-06.jpg',
-    alt: 'Subway Shadows',
-    location: '表参道',
-    date: '2024/02/10',
-    description: ''
-  },
-  {
-    id: '7',
-    src: '/images/photo-07a.jpg',
-    alt: 'Rainy Day',
-    location: '京都',
-    date: '2024/06/22',
-    description: ''
-  },
-  {
-    id: '8',
-    src: '/images/photo-08.jpg',
-    alt: 'Summer Vibes',
-    location: '沖縄',
-    description: ''
-  },
-  {
-    id: '9',
-    src: '/images/photo-09.jpg',
-    alt: 'Cold Blue',
-    location: '北海道',
     description: ''
   }
 ];
