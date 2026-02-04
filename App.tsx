@@ -93,30 +93,35 @@ const App: React.FC = () => {
     });
   };
 
-  const handleExport = async () => {
-    const currentHeroPhoto = photos.find(p => getHighResUrl(p) === heroImageUrl);
-    const heroId = currentHeroPhoto ? currentHeroPhoto.id : (photos.length > 0 ? photos[0].id : '');
+  const handleExport = async (): Promise<'copied' | 'nothing_to_copy' | 'error'> => {
+    try {
+      const newPhotos = photos.filter(p => p.src.startsWith('data:image'));
 
-    const photosJson = JSON.stringify(photos, (key, value) => {
-      if (key === 'src' && typeof value === 'string' && value.startsWith('data:image')) {
-        return '/images/REPLACE_WITH_SAVED_IMAGE_FILENAME.jpg';
+      if (newPhotos.length === 0) {
+        return 'nothing_to_copy';
       }
-      return value;
-    }, 2);
 
-    const exportContent = `import { Photo } from '../types';
+      const photosJson = JSON.stringify(newPhotos, (key, value) => {
+        if (key === 'src' && typeof value === 'string' && value.startsWith('data:image')) {
+          return '/images/REPLACE_WITH_SAVED_IMAGE_FILENAME.jpg';
+        }
+        return value;
+      }, 2);
 
-// Attention Developer:
-// For any newly uploaded images, you must save them to your project's
-// '/images' directory and replace the 'src' placeholder below
-// with the correct file path (e.g., '/images/your-new-image.jpg').
+      const exportContent = `// Attention Developer:
+// 1. Add the photo objects below to your 'initialPhotos' array in 'data/photos.ts'.
+// 2. Save the uploaded images to your project's '/images' directory.
+// 3. Replace the 'src' placeholder for each new photo with its correct file path.
+// 4. Optionally, update 'DEFAULT_HERO_PHOTO_ID' in 'data/photos.ts' if desired.
 
-export const DEFAULT_HERO_PHOTO_ID = '${heroId}';
-
-export const initialPhotos: Photo[] = ${photosJson};
+${photosJson}
 `;
-    await navigator.clipboard.writeText(exportContent);
-    return true;
+      await navigator.clipboard.writeText(exportContent);
+      return 'copied';
+    } catch (err) {
+      console.error('Failed to copy to clipboard:', err);
+      return 'error';
+    }
   };
 
 
@@ -174,6 +179,7 @@ export const initialPhotos: Photo[] = ${photosJson};
             isOwnerMode={isOwnerMode}
             onSetHero={(p) => setHeroImageUrl(getHighResUrl(p))}
             currentHeroUrl={heroImageUrl}
+            scrollContainerRef={containerRef}
           />
         </section>
       </div>

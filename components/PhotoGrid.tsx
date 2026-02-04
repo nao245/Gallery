@@ -10,9 +10,10 @@ interface PhotoGridProps {
   isOwnerMode: boolean;
   onSetHero: (photo: Photo) => void;
   currentHeroUrl: string;
+  scrollContainerRef: React.RefObject<HTMLDivElement>;
 }
 
-const PhotoGrid: React.FC<PhotoGridProps> = ({ photos, onPhotoClick, isOwnerMode, onSetHero, currentHeroUrl }) => {
+const PhotoGrid: React.FC<PhotoGridProps> = ({ photos, onPhotoClick, isOwnerMode, onSetHero, currentHeroUrl, scrollContainerRef }) => {
   return (
     <div className="flex flex-nowrap h-[55vh] sm:h-[65vh] gap-16 sm:gap-32 items-center px-8 sm:px-[20vw]">
       {photos.map((photo) => {
@@ -25,6 +26,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ photos, onPhotoClick, isOwnerMode
             isOwnerMode={isOwnerMode}
             onSetHero={() => onSetHero(photo)}
             isCurrentHero={isCurrentHero}
+            scrollContainerRef={scrollContainerRef}
           />
         );
       })}

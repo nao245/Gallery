@@ -2,20 +2,38 @@
 import React, { useState } from 'react';
 import ClipboardCopyIcon from './icons/ClipboardCopyIcon';
 
+type CopyResult = 'copied' | 'nothing_to_copy' | 'error';
+
 interface ExportButtonProps {
-  onCopy: () => Promise<boolean>;
+  onCopy: () => Promise<CopyResult>;
 }
 
 const ExportButton: React.FC<ExportButtonProps> = ({ onCopy }) => {
-  const [isCopied, setIsCopied] = useState(false);
+  const [copyState, setCopyState] = useState<'idle' | CopyResult>('idle');
 
   const handleClick = async () => {
-    const success = await onCopy();
-    if (success) {
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2500); // Reset after 2.5 seconds
+    if (copyState !== 'idle') return;
+
+    const result = await onCopy();
+    setCopyState(result);
+    setTimeout(() => setCopyState('idle'), 2500);
+  };
+
+  const getTooltipText = () => {
+    switch (copyState) {
+      case 'copied':
+        return 'コピーしました！';
+      case 'nothing_to_copy':
+        return '新しい写真がありません';
+      case 'error':
+        return 'コピーに失敗';
+      case 'idle':
+      default:
+        return 'コードをコピー';
     }
   };
+
+  const isIdle = copyState === 'idle';
 
   return (
     <div className="relative group">
@@ -33,9 +51,9 @@ const ExportButton: React.FC<ExportButtonProps> = ({ onCopy }) => {
       </button>
       <div 
         className={`absolute bottom-1/2 translate-y-1/2 right-full mr-4 px-3 py-2 bg-gray-800 text-white text-sm font-semibold rounded-lg shadow-lg whitespace-nowrap transition-all duration-200 ease-in-out pointer-events-none
-          ${isCopied ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'}`}
+          ${!isIdle ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'}`}
       >
-        {isCopied ? 'コピーしました！' : 'コードをコピー'}
+        {getTooltipText()}
         <div className="absolute top-1/2 -translate-y-1/2 left-full w-2 h-2 bg-gray-800 rotate-45"></div>
       </div>
     </div>
