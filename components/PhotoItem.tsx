@@ -1,46 +1,73 @@
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Photo } from '../types';
-import CollectionIcon from './icons/CollectionIcon';
+import LandscapeIcon from './icons/LandscapeIcon';
 
 interface PhotoItemProps {
   photo: Photo;
   onClick: () => void;
-  isAnimating: boolean;
+  isOwnerMode: boolean;
+  onSetHero: () => void;
+  isCurrentHero: boolean;
 }
 
-const PhotoItem: React.FC<PhotoItemProps> = ({ photo, onClick, isAnimating }) => {
-  const baseStyle = "break-inside-avoid relative group cursor-pointer rounded-lg overflow-hidden transition-all duration-300";
-  
-  const neumorphicBase = "bg-gray-950 shadow-[5px_5px_10px_#0c0e14,_-5px_-5px_10px_#1a1e28]";
-  const neumorphicHover = "hover:shadow-[8px_8px_16px_#0c0e14,_-8px_-8px_16px_#1a1e28] hover:scale-[1.03]";
-  // Enhanced animating effect with a glow and larger scale
-  const neumorphicAnimating = "shadow-[0_0_25px_rgba(250,204,21,0.4)] scale-[1.10] z-10";
+const PhotoItem: React.FC<PhotoItemProps> = ({ photo, onClick, isOwnerMode, onSetHero, isCurrentHero }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const elementRef = useRef<HTMLDivElement>(null);
 
-  const combinedClassName = `
-    ${baseStyle}
-    ${isAnimating ? neumorphicAnimating : `${neumorphicBase} ${neumorphicHover}`}
-  `;
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1, rootMargin: '0px 100px 0px 100px' }
+    );
+    if (elementRef.current) observer.observe(elementRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const handleSetHeroClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent modal from opening
+    onSetHero();
+  };
+
+  // シンプルなフェードインアニメーション
+  const visibilityClass = isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-10 scale-95";
 
   return (
     <div 
-      className={combinedClassName}
+      ref={elementRef}
+      className={`h-[45vh] sm:h-[55vh] relative group cursor-pointer transition-all duration-700 ease-out flex-shrink-0 ${visibilityClass}`}
       onClick={onClick}
     >
-      {photo.src.length > 1 && (
-        <div className="absolute top-2.5 right-2.5 z-10 bg-black/50 p-1 rounded-full backdrop-blur-sm">
-          <CollectionIcon className="w-5 h-5 text-white" />
-        </div>
+      {isOwnerMode && !isCurrentHero && (
+        <button
+          onClick={handleSetHeroClick}
+          className="absolute top-4 right-4 z-10 p-2 bg-black/50 rounded-full text-white/70 hover:text-white hover:bg-orange-600/80
+                     opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100"
+          title="背景画像に設定する"
+        >
+          <LandscapeIcon className="w-5 h-5" />
+        </button>
       )}
-      <img 
-        src={photo.src[0]} 
-        alt={photo.alt}
-        className="w-full h-auto block transform transition-all duration-500 ease-in-out rounded-lg grayscale group-hover:grayscale-0"
-      />
-      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4 rounded-lg">
-        <p className="text-amber-300 text-lg font-cormorant italic font-semibold opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all delay-100 duration-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
-          {photo.alt}
-        </p>
+
+      {/* 背後の光（簡略化） */}
+      <div className="absolute inset-0 -z-10 bg-orange-500/20 blur-[40px] transition-opacity duration-300 rounded-full scale-125 opacity-0 group-hover:opacity-100"></div>
+
+      {/* 額縁 */}
+      <div className="h-full w-auto overflow-hidden border-[12px] border-[#0e1116] bg-[#0e1116] shadow-2xl transition-all duration-500 group-hover:-translate-y-6 group-hover:shadow-[0_0_60px_rgba(249,115,22,0.25)]">
+        <img 
+          src={photo.src} 
+          alt={photo.alt}
+          className="h-full w-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+          loading="lazy"
+        />
+        {/* 光の漏れ（内側） */}
+        <div className="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/5 transition-colors duration-500 pointer-events-none"></div>
+      </div>
+
+      {/* ラベル */}
+      <div className="absolute -bottom-14 left-0 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+        <p className="text-orange-500 text-[8px] font-bold uppercase tracking-[0.3em] mb-1">{photo.location || 'COLLECTION'}</p>
+        <h3 className="text-white text-xl font-playfair font-bold whitespace-nowrap">{photo.alt}</h3>
       </div>
     </div>
   );

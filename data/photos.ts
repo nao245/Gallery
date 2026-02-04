@@ -1,177 +1,94 @@
 
 import { Photo } from '../types';
 
-// Initial placeholder photos with rich metadata
-// Assumes images are located in the `public/images` directory.
+export const DEFAULT_HERO_PHOTO_ID = '1';
+
+// 初期表示用の写真データ（説明文の中身をクリア）
 export const initialPhotos: Photo[] = [
   {
+    id: '1',
+    src: '/images/photo-01.jpg',
+    highResSrc: '/images/photo-01-high-res.jpg',
+    alt: 'Midnight City',
+    location: '東京, 日本',
+    date: '2024/05/12',
+    camera: 'Sony A7R IV',
+    lens: '35mm f/1.4',
+    settings: '1/60s, f/1.4, ISO 800',
+    description: ''
+  },
+  {
     id: '2',
-    src: ['/images/loyal-companion.jpg'],
-    highResSrc: '/images/loyal-companion-high-res.jpg',
-    alt: 'Loyal Companion',
-    location: 'Scottish Highlands',
-    date: '2023-08-22',
-    camera: 'Nikon Z6 II',
-    lens: 'NIKKOR Z 50mm f/1.8 S',
-    settings: 'f/2.2, 1/500s, ISO 100',
-    description: 'A dog enjoying the majestic view of the Scottish Highlands. The soft light of the late afternoon perfectly captured his calm demeanor.'
+    src: '/images/photo-02a.jpg',
+    alt: 'Neon Horizon',
+    location: '新宿',
+    date: '2024/06/01',
+    camera: 'Fujifilm X-T4',
+    lens: '23mm f/2',
+    settings: '1/125s, f/2.0, ISO 400',
+    description: ''
   },
   {
     id: '3',
-    src: [
-        '/images/castle-1.jpg', 
-        '/images/castle-2.jpg', 
-        '/images/castle-3.jpg'
-    ],
-    alt: 'Castle Series',
-    location: 'Bavaria, Germany',
-    date: '2023-07-10',
-    camera: 'Canon EOS R5',
-    lens: 'RF 15-35mm F2.8 L IS USM',
-    settings: 'f/11, 1/200s, ISO 100',
-    description: 'A series capturing the timeless beauty of Neuschwanstein Castle from different perspectives. Each photo tells a part of the story.'
-  },
-   {
-    id: '5',
-    src: ['/images/city-of-lights.jpg'],
-    alt: 'City of Lights',
-    location: 'Tokyo, Japan',
-    date: '2024-01-20',
-    camera: 'Fujifilm X-T4',
-    lens: 'XF 16-55mm F2.8 R LM WR',
-    settings: 'f/2.8, 2s, ISO 160',
-    description: 'The vibrant and sprawling metropolis of Tokyo at night, a dazzling display of neon and energy.'
+    src: '/images/photo-03.jpg',
+    alt: 'Morning Dew',
+    location: '長野',
+    date: '2024/04/20',
+    camera: 'Sony A7C',
+    lens: '50mm f/1.8',
+    settings: '1/1000s, f/2.8, ISO 100',
+    description: ''
   },
   {
     id: '4',
-    src: ['/images/into-the-wild.jpg'],
-    alt: 'Into the Wild',
-    location: 'Zion National Park, USA',
-    date: '2023-05-30',
-    camera: 'Leica Q2',
-    lens: 'Summilux 28mm f/1.7 ASPH.',
-    settings: 'f/5.6, 1/250s, ISO 100'
+    src: '/images/photo-04.jpg',
+    alt: 'Urban Symmetry',
+    location: '銀座',
+    date: '2024/07/15',
+    camera: 'Ricoh GR III',
+    lens: '28mm f/2.8',
+    settings: '1/250s, f/8.0, ISO 200',
+    description: ''
+  },
+  {
+    id: '5',
+    src: '/images/photo-05.jpg',
+    alt: 'Golden Hour',
+    location: '江の島',
+    date: '2024/08/05',
+    camera: 'Sony A7S III',
+    lens: '85mm f/1.4',
+    settings: '1/4000s, f/1.4, ISO 100',
+    description: ''
   },
   {
     id: '6',
-    src: ['/images/coastal-drive.jpg'],
-    alt: 'Coastal Drive',
-    location: 'Big Sur, California',
-    date: '2023-06-18',
-    camera: 'DJI Mavic 3',
-    lens: 'Hasselblad L2D-20c',
-    settings: 'f/2.8, 1/1000s, ISO 100',
-    description: 'An aerial shot of a winding road clinging to the dramatic cliffs of Big Sur. The pacific ocean stretches out to the horizon.'
+    src: '/images/photo-06.jpg',
+    alt: 'Subway Shadows',
+    location: '表参道',
+    date: '2024/02/10',
+    description: ''
   },
   {
     id: '7',
-    src: ['/images/urban-reflection.jpg'],
-    alt: 'Urban Reflection',
-    location: 'Chicago, USA',
-    date: '2023-11-05',
-    camera: 'Canon EOS 6D Mark II',
-    lens: 'EF 50mm f/1.8 STM',
-    settings: 'f/4.0, 1/1000s, ISO 100',
-    description: 'A reflection of the city skyline in a puddle after a rainstorm, capturing the duality of the urban landscape.'
+    src: '/images/photo-07a.jpg',
+    alt: 'Rainy Day',
+    location: '京都',
+    date: '2024/06/22',
+    description: ''
   },
   {
     id: '8',
-    src: ['/images/forest-floor-1.jpg', '/images/forest-floor-2.jpg'],
-    alt: 'Forest Floor Details',
-    location: 'Black Forest, Germany',
-    date: '2023-10-12',
-    camera: 'Olympus OM-D E-M1 Mark III',
-    lens: 'M.Zuiko Digital ED 60mm f/2.8 Macro',
-    settings: 'f/3.5, 1/80s, ISO 400',
-    description: 'A closer look at the intricate details of moss and mushrooms on the forest floor. Nature\'s tiny wonders.'
+    src: '/images/photo-08.jpg',
+    alt: 'Summer Vibes',
+    location: '沖縄',
+    description: ''
   },
   {
     id: '9',
-    src: ['/images/pensive-gaze.jpg'],
-    alt: 'Pensive Gaze',
-    location: 'Paris, France',
-    date: '2024-02-18',
-    camera: 'Sony α7R IV',
-    lens: 'FE 85mm f/1.4 GM',
-    settings: 'f/1.4, 1/800s, ISO 100',
-    description: 'A candid portrait capturing a moment of quiet contemplation on a Parisian street.'
-  },
-  {
-    id: '10',
-    src: ['/images/geometric-lines.jpg'],
-    alt: 'Geometric Lines',
-    location: 'Berlin, Germany',
-    date: '2023-12-01',
-    camera: 'Fujifilm GFX 100S',
-    lens: 'GF 32-64mm f/4 R LM WR',
-    settings: 'f/8, 1/250s, ISO 100',
-    description: 'The stark, repeating lines of a modern architectural facade, creating an abstract pattern.'
-  },
-  {
-    id: '11',
-    src: ['/images/morning-brew.jpg'],
-    alt: 'Morning Brew',
-    location: 'Kyoto, Japan',
-    date: '2024-03-05',
-    camera: 'Ricoh GR III',
-    lens: '28mm f/2.8',
-    settings: 'f/2.8, 1/60s, ISO 200',
-    description: 'A quiet moment with a cup of freshly brewed coffee in a traditional Japanese cafe.'
-  },
-  {
-    id: '12',
-    src: ['/images/market-hustle-1.jpg', '/images/market-hustle-2.jpg', '/images/market-hustle-3.jpg'],
-    alt: 'Market Hustle',
-    location: 'Marrakech, Morocco',
-    date: '2024-04-22',
-    camera: 'Leica M11',
-    lens: 'Summicron-M 35mm f/2 ASPH.',
-    settings: 'f/5.6, 1/500s, ISO 125',
-    description: 'The vibrant colors, textures, and energy of a bustling souk in Marrakech.'
-  },
-  {
-    id: '13',
-    src: ['/images/shadow-and-light.jpg'],
-    alt: 'Shadow and Light',
-    location: 'New York City, USA',
-    date: '2023-08-30',
-    camera: 'Nikon F3',
-    lens: 'Nikkor 50mm f/1.2 AI-S',
-    settings: 'f/11, 1/125s, ISO 400',
-    description: 'A black and white street scene, focusing on the dramatic interplay of light and shadow on the city streets.'
-  },
-  {
-    id: '14',
-    src: ['/images/oceans-breath.jpg'],
-    alt: 'Ocean\'s Breath',
-    location: 'Iceland',
-    date: '2023-09-25',
-    camera: 'Pentax K-1 Mark II',
-    lens: 'D FA 15-30mm f/2.8 ED SDM WR',
-    settings: 'f/16, 30s, ISO 100',
-    description: 'A long exposure of the Icelandic coast, smoothing the waves into a mystical fog.'
-  },
-  {
-    id: '15',
-    src: ['/images/galactic-core.jpg'],
-    highResSrc: '/images/galactic-core-high-res.jpg',
-    alt: 'Galactic Core',
-    location: 'Atacama Desert, Chile',
-    date: '2023-07-19',
-    camera: 'Sony a7S III',
-    lens: 'Sigma 14mm f/1.8 DG HSM Art',
-    settings: 'f/1.8, 20s, ISO 3200',
-    description: 'The Milky Way galaxy stretching across the pristine, dark skies of the Atacama Desert.'
-  },
-  {
-    id: '16',
-    src: ['/images/liquid-gold.jpg'],
-    alt: 'Liquid Gold',
-    location: 'Studio',
-    date: '2024-05-10',
-    camera: 'Phase One XF IQ4',
-    lens: 'Schneider Kreuznach 120mm LS f/4 Macro',
-    settings: 'f/11, 1/125s, ISO 50',
-    description: 'An abstract macro shot of oil and water, creating vibrant, swirling patterns.'
-  },
+    src: '/images/photo-09.jpg',
+    alt: 'Cold Blue',
+    location: '北海道',
+    description: ''
+  }
 ];

@@ -35,7 +35,7 @@ const ExportButton: React.FC<ExportButtonProps> = ({ onCopy }) => {
         className={`absolute bottom-1/2 translate-y-1/2 right-full mr-4 px-3 py-2 bg-gray-800 text-white text-sm font-semibold rounded-lg shadow-lg whitespace-nowrap transition-all duration-200 ease-in-out pointer-events-none
           ${isCopied ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'}`}
       >
-        {isCopied ? 'コピーしました！' : 'データコピー'}
+        {isCopied ? 'コピーしました！' : 'コードをコピー'}
         <div className="absolute top-1/2 -translate-y-1/2 left-full w-2 h-2 bg-gray-800 rotate-45"></div>
       </div>
     </div>

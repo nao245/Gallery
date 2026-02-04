@@ -7,8 +7,6 @@ export const getHighResUrl = (photo: Photo): string => {
     return photo.highResSrc;
   }
   
-  // Otherwise, fall back to the first available source image.
-  // This gracefully handles uploaded images (data URIs) and placeholders
-  // without needing specific URL parsing logic.
-  return photo.src[0];
+  // Return the single source string
+  return photo.src;
 };

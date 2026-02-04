@@ -12,7 +12,6 @@ const PasscodeModal: React.FC<PasscodeModalProps> = ({ onClose, onSubmit, error 
   const [passcode, setPasscode] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Focus the input field when the modal opens
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
@@ -20,7 +19,6 @@ const PasscodeModal: React.FC<PasscodeModalProps> = ({ onClose, onSubmit, error 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(passcode);
-    // Do not clear passcode on error, so user can correct it
   };
 
   return (
@@ -32,8 +30,8 @@ const PasscodeModal: React.FC<PasscodeModalProps> = ({ onClose, onSubmit, error 
         className="relative bg-gray-950 border border-gray-800 rounded-lg shadow-2xl shadow-black/50 w-full max-w-sm p-8 animate-scale-up"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-xl font-bold text-white text-center mb-4">オーナーモード</h2>
-        <p className="text-gray-400 text-center mb-6">続行するにはパスコードを入力してください。</p>
+        <h2 className="text-xl font-bold text-white text-center mb-4 uppercase tracking-[0.2em]">オーナーモード</h2>
+        <p className="text-gray-500 text-center mb-6 text-sm">続行するにはパスコードを入力してください。</p>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -41,14 +39,14 @@ const PasscodeModal: React.FC<PasscodeModalProps> = ({ onClose, onSubmit, error 
             type="password"
             value={passcode}
             onChange={(e) => setPasscode(e.target.value)}
-            className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white text-center text-2xl tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white text-center text-2xl tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-orange-500"
             placeholder="****"
-            maxLength={4} // Assuming a 4-digit passcode
+            maxLength={4}
           />
-          {error && <p className="text-red-400 text-sm text-center mt-3 animate-shake">{error}</p>}
+          {error && <p className="text-red-400 text-sm text-center mt-4 animate-shake">{error}</p>}
           <button
             type="submit"
-            className="w-full mt-6 px-4 py-3 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 active:bg-amber-800 transition-colors duration-200"
+            className="w-full mt-8 px-4 py-4 bg-orange-600 text-white font-bold uppercase tracking-[0.2em] rounded-lg hover:bg-orange-500 active:bg-orange-700 shadow-lg shadow-orange-950/20 transition-all duration-200"
           >
             Enter
           </button>
